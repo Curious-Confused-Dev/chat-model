@@ -6,6 +6,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { NgFor, NgClass, NgIf } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { GeminiService } from './gemini.service';
+import { MarkdownModule } from 'ngx-markdown';
 
 @Component({
   selector: 'chat-area',
@@ -18,14 +19,20 @@ import { GeminiService } from './gemini.service';
     NgFor,
     NgClass,
     NgIf,
-    FormsModule
+    FormsModule,
+    MarkdownModule,
   ],
   template: `
     <div class="chat-area-root">
       <div class="messages-list">
         <div *ngFor="let msg of messages()" [ngClass]="{'user-msg': msg.role === 'user', 'bot-msg': msg.role !== 'user'}" class="msg-row">
           <div class="msg-bubble" [ngClass]="msg.role === 'user' ? 'user-bubble' : 'bot-bubble'">
-            <span>{{ msg.text }}</span>
+            <ng-container *ngIf="msg.role === 'bot'; else userText">
+              <markdown [data]="msg.text" class="markdown-content"></markdown>
+            </ng-container>
+            <ng-template #userText>
+              <span>{{ msg.text }}</span>
+            </ng-template>
             <ng-container *ngIf="msg.image">
               <img [src]="msg.image" class="msg-image" />
             </ng-container>
@@ -115,6 +122,24 @@ import { GeminiService } from './gemini.service';
     }
     .chat-input-field {
       flex: 1 1 auto;
+    }
+    .markdown-content {
+      font-size: 1rem;
+      line-height: 1.6;
+      color: #222;
+    }
+    .markdown-content pre {
+      background: #f5f5f5;
+      border-radius: 0.5rem;
+      padding: 0.75rem;
+      overflow-x: auto;
+      font-size: 0.95rem;
+    }
+    .markdown-content code {
+      background: #f5f5f5;
+      border-radius: 0.3rem;
+      padding: 0.1rem 0.3rem;
+      font-size: 0.97em;
     }
   `]
 })
