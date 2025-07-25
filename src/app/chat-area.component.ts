@@ -20,10 +20,10 @@ import { MarkdownModule } from 'ngx-markdown';
     NgClass,
     NgIf,
     FormsModule,
-    MarkdownModule,
+    MarkdownModule
   ],
   template: `
-    <div class="chat-area-root">
+    <div class="chat-area-root chat">
       <div class="messages-list">
         <div *ngFor="let msg of messages()" [ngClass]="{'user-msg': msg.role === 'user', 'bot-msg': msg.role !== 'user'}" class="msg-row">
           <div class="msg-bubble" [ngClass]="msg.role === 'user' ? 'user-bubble' : 'bot-bubble'">
