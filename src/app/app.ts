@@ -10,6 +10,9 @@ import { ChatAreaComponent } from './chat-area.component';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { GeminiKeyDialogComponent } from './gemini-key-dialog.component';
 
+// import { Component } from '@angular/core';
+// import { MatSidenavModule } from '@angular/material/sidenav';
+
 @Component({
   selector: 'app-root',
   standalone: true,
